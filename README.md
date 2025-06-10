@@ -1,5 +1,5 @@
 # MIT_EECS_HW1
-### Homework 1 from MIT opencourseware, a calculator parser  (Still in progress)
+### Homework 1 from MIT opencourseware, a calculator parser
 - `hw1.pdf` is the documentation for this homework
 - `providedSample.py` is the provided code sample (Python2)
 - `solution.py` is my solution to the homework (Python3)
