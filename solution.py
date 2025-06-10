@@ -54,7 +54,9 @@ class Sum(BinaryOp):
     def eval(self, env):
         leftEval = self.left.eval(env)
         rightEval = self.right.eval(env)
-        return leftEval + rightEval
+        if isNum(leftEval) and isNum(rightEval):
+            return leftEval + rightEval
+        return Sum(leftEval, rightEval)
 
 
 class Prod(BinaryOp):
@@ -62,27 +64,33 @@ class Prod(BinaryOp):
     def eval(self, env):
         leftEval = self.left.eval(env)
         rightEval = self.right.eval(env)
-        return leftEval * rightEval
+        if isNum(leftEval) and isNum(rightEval):
+            return leftEval * rightEval
+        return Prod(leftEval, rightEval)
 
 class Quot(BinaryOp):
     opStr = 'Quot'
     def eval(self, env):
         leftEval = self.left.eval(env)
         rightEval = self.right.eval(env)
-        return leftEval / rightEval
+        if isNum(leftEval) and isNum(rightEval):
+            return leftEval / rightEval
+        return Quot(leftEval, rightEval)
 
 class Diff(BinaryOp):
     opStr = 'Diff'
     def eval(self, env):
         leftEval = self.left.eval(env)
         rightEval = self.right.eval(env)
-        return leftEval - rightEval
+        if isNum(leftEval) and isNum(rightEval):
+            return leftEval - rightEval
+        return Diff(leftEval, rightEval)
 
 class Assign(BinaryOp):
     opStr = 'Assign'
     def eval(self, env):
         varName = self.left.name
-        varValue = self.right.eval(env)
+        varValue = self.right
         env[varName] = varValue
         # Prefer return varValue 
         #   returning None to match the homework document
@@ -108,7 +116,12 @@ class Variable:
     def __str__(self):
         return 'Var('+self.name+')'
     def eval(self, env):
-        return env[self.name]
+        if self.name not in env:
+            return self
+        value = env[self.name]
+        if isNum(value):
+            return value
+        return value.eval(env)
     __repr__ = __str__
 
 # characters that are single-character tokens
